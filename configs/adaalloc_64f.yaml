@@ -1,0 +1,8 @@
+# AdaAlloc at 64 frames = 16,384 visual tokens (the paper's 16K setting). Everything else comes from
+# the 128-frame config: frame caps halve with num_frames, while per-frame resolution and every other
+# setting stay the same.
+base: adaalloc_128f.yaml
+name: adaalloc_64f
+
+budget:
+  num_frames: 64    # x 256 tokens per frame = 16,384 visual tokens (16K)

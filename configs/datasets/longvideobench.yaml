@@ -1,0 +1,7 @@
+# Paths are relative to --data-root (see README).
+name: longvideobench
+annotations: LongVideoBench/annotations/video_qa.json
+video_ids: LongVideoBench/annotations/video_ids.json
+video_paths: LongVideoBench/annotations/video_paths.json
+video_info: LongVideoBench/annotations/video_info.json
+pecore_features: LongVideoBench/features/pecore

@@ -1,0 +1,13 @@
+[project]
+name = "adaalloc"
+version = "1.0.0"
+description = "AdaAlloc: adaptive visual-token allocation for long-video question answering"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+
+[tool.setuptools]
+packages = ["adaalloc"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]

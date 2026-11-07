@@ -1,0 +1,7 @@
+# Paths are relative to --data-root (see README).
+name: mlvu
+annotations: MLVU/annotations/video_qa.json
+video_ids: MLVU/annotations/video_ids.json
+video_paths: MLVU/annotations/video_paths.json
+video_info: MLVU/annotations/video_info.json
+pecore_features: MLVU/features/pecore

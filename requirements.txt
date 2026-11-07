@@ -1,0 +1,12 @@
+# Install after third_party/universalvtg/install.sh (see README); versions of the paper runs.
+transformers==4.57.6
+tokenizers==0.22.2
+qwen-vl-utils==0.0.14
+accelerate
+decord==0.6.0
+opencv-python-headless==4.11.0.86
+numpy
+Pillow
+PyYAML
+pyarrow  # scripts/prepare_data.py, Video-MME
+pytest

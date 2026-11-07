@@ -1,0 +1,7 @@
+# MLVU-Dev (multiple-choice tasks); paths are relative to --data-root (see README).
+name: mlvu
+annotations: MLVU/annotations_dev/video_qa.json
+video_ids: MLVU/annotations_dev/video_ids.json
+video_paths: MLVU/annotations_dev/video_paths.json
+video_info: MLVU/annotations_dev/video_info.json
+pecore_features: MLVU/features/pecore_dev

@@ -1,0 +1,7 @@
+# Paths are relative to --data-root (see README).
+name: videomme
+annotations: Video-MME/annotations/video_qa.json
+video_ids: Video-MME/annotations/video_ids.json
+video_paths: Video-MME/annotations/video_paths.json
+video_info: Video-MME/annotations/video_info.json
+pecore_features: Video-MME/features/pecore

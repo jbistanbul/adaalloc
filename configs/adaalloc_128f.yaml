@@ -1,0 +1,83 @@
+# AdaAlloc with Qwen3-VL-8B at 128 frames (32K), the base of every other config.
+#
+# `budget.num_frames` is the only budget knob: every MLLM call gets num_frames x 256 visual tokens
+# (128 = 32,768 tokens, the paper's 32K setting; 64 = 16K). Frame caps below are multiples of
+# num_frames, so they follow the budget.
+# For another budget, inherit this file and change num_frames (see adaalloc_64f.yaml).
+name: adaalloc_128f
+
+budget:
+  num_frames: 128   # x 256 tokens per frame = 32,768 visual tokens (32K)
+
+# true: AdaAlloc, which picks a global/local policy per question. false: every question uses the
+# BALANCED split (the paper's Fixed-policy ablation).
+adaptive_allocation: true
+
+model:
+  name: Qwen/Qwen3-VL-8B-Instruct
+  device: cuda
+  dtype: float16
+  max_new_tokens: 768
+  answer_parse_attempts: 3
+  plan_parse_attempts: 2
+
+video:
+  min_frames: 4
+  min_pixels: 131072
+  max_pixels: 524288
+  raw_pixels_multiplier: 2.0
+
+frames:            # frame caps, as multiples of num_frames (at 128 frames: 128, 256, 128, 256, 128)
+  planner: 1       # whole-video overview the planner sees
+  refiner: 2       # candidate-region frames the refiner sees
+  local: 1         # final answer, local (detail) stream
+  overview: 2      # final answer, overview stream of GLOBAL_ONLY, GLOBAL_HEAVY and BALANCED
+  overview_local_heavy: 1   # final answer, overview stream of LOCAL_HEAVY
+
+fps:
+  overview: 1.0
+  local: 2.0
+  refiner: 1.0
+
+tokens_per_frame:  # resolution floors; independent of the budget
+  overview:
+    GLOBAL_ONLY: 64
+    GLOBAL_HEAVY: 64
+    BALANCED: 60
+  local:
+    LOCAL_HEAVY: 128
+
+retrieval:
+  universal_vtg_root: null   # $ADAALLOC_UNIVERSAL_VTG_ROOT or third_party/universalvtg
+  experiment: experiments/universalvtg
+  checkpoint: best
+  device: cuda
+  feature_fps: 2.0
+  top_k: 5
+
+memory:
+  max_regions: 12
+  merge_gap_sec: 1.0
+  padding_sec: 0.5
+  min_region_confidence: 0.2
+  max_segments_per_query: 5
+  max_question_segments: 5
+  max_planner_seeds: 3
+  weak_retrieval_threshold: 0.35
+
+refiner:
+  max_new_tokens: 1024
+  parse_attempts: 2
+  min_frames_per_region: 8
+  keep_score_strength: 0.8
+  min_keep_confidence: 0.0
+  min_adjust_confidence: 0.85
+  min_remove_confidence: 0.8
+  max_uncertainty_for_removal: 0.5
+  min_remove_frames: 3
+  min_merge_confidence: 0.8
+  max_merge_gap_sec: 15.0
+  max_focus_regions: 2
+  block_removes_for_order_count: true
+  snap_boundary_frames: true
+  no_evidence_fallback: true
